@@ -1,2 +1,3 @@
 # practica_sisop
 Practica de ejercicios para el parcial de sisop
+O para el _recuperatorio_ ...

@@ -1,0 +1,4 @@
+1;Barrio Norte;4
+2;San Nicolas;10
+3;Consti;2
+4;San Telmo;4

@@ -1,0 +1,4 @@
+3;Pueyrredon 25;6
+4;Libertador 1200;8
+5;Paseo Colon 500;7
+6;Independencia 34;9.5

@@ -1,12 +1,4 @@
 #!/bin/perl
-
-#sala:
-#id_espectador:
-#id_pelicula:
-#funcion:
-#fecha_funcion:
-#cantidad_entradas
-
 # 1. Realizar un script en perl
 # 2. Invocado con dos parametros, el primer parametro correpsonde al id de un espectador, el segundo corresponde al
 # directorio de input. Validar que sean EXACTAMENTE 2 parametros, si hay error mostrar mensaje y terminar el programa
@@ -14,7 +6,7 @@
 # tiene archivos de espectadores, mostrar mensaje de error y terminar el programa
 # 4. Los archivos de espectadores son todos aquellos con extension.dat y tienen el siguiente formato:
 # sala:id_espectador:id_pelicula:funcion:fecha_funcion:cantidad_entradas
-# 5. Tambien contamos con un archivo en el directorio /catalogos llamado peliculas.mae (validar con file test su 
+# 5. Tambien contamos con un archivo en el directorio /catalogos llamado peliculas.mae (validar con file test su
 # existencia). El formato de registro es: id_pelicula:titulo:clasificacion:duracion:direccion:produccion:categoria:protagonistas
 # 6. Leer todos los archivos de espectadores (los archivos .dat) del directorio de input (indicado en el parametro 2)
 # 7. Para los registros correspondientes al espectador indicado en el parametro 1
@@ -25,13 +17,6 @@
 # 12. Preguntarle al usuario si desea grabar este resultado en un archivo
 # 13. Si responde que no, terminar el programa, si indica si, grabar el archivo <id-espectador>.txt en el directorio /output
 # 14. Abrir y cerrar adecuadamente todos los archivos. Si hay algun error mostrar mensaje y terminar el programa
-
-
-# opendir ( DIR, $dirname ) || die "Error in opening dir $dirname\n";
-# while( ($filename = readdir(DIR))){
-#      print("$filename\n");
-# }
-# closedir(DIR);
 
 sub main {
 	my $cantidad_argumentos = scalar @ARGV;
@@ -47,7 +32,7 @@ sub main {
 	}
 	opendir(DIR, $directorio);
 	@archivos = readdir(DIR);
-	my $numero_archivos = scalar @archivos; 
+	my $numero_archivos = scalar @archivos;
 	#en un directorio siempre habra 2 archivos: './' y '../'
 	if( $numero_archivos < 3 ) {
 		die "No hay archivos en " . $directorio . "\n";
@@ -55,7 +40,34 @@ sub main {
 	closedir(DIR);
 
 	%HASH_PELICULAS=();
-	opendir(PELIS, '/catalogos/peliculas.mae'); 
+	opendir(PELIS, '/catalogos/peliculas.mae');
+
+	#recorro cada archivo de espectadores
+	foreach my $archivo_espectadores(@archivos){
+		open(my $fh, '<', $archivo_espectadores) or die "El archivo no pudo ser abierto";
+		while (my $registro = <$fh>){
+			chomp $registro;
+			my @datos_registro = split(':',$registro);
+			if($id_espectador == $datos_registro[1]){
+				my $genero = $peliculas{$datos_registro[2]} or "indeterminado";
+				$entradas{$genero} += $datos_registro[5];
+			}
+		}
+		close($fh);
+	}
+}
+
+foreach my $key(%entradas){
+	print "Clave= $key - Cantidad= $entradas{$key} \n";
+}
+
+my $grabarResultados = read ("Desea guardar el resultado en un archivo?");
+if($grabarResultados == "si"){
+	open(my $salida,'>',"/output/$id_espectador.txt") or die ("No se puede abrir el archivo para escritura");
+	foreach my $key(%entradas){
+		print $salida "Clave=$key - Cantidad=$entradas{$key}";
+	}
+	close($salida)
 }
 
 main();

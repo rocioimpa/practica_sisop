@@ -25,5 +25,5 @@
 localidad=$1
 dia_semana=$2
 
-resultados=$( grep -o ".*;\(,?\)$dia_semana,.*;[0-9][0-9]:[0-9][0-9];[0-9][0-9]:[0-9][0-9]_.*:$localidad" DATOS.dat | wc -l )
+resultados=$( grep -o ".*;.**$dia_semana.**;[0-9][0-9]:[0-9][0-9];[0-9][0-9]:[0-9][0-9]_.*:$localidad" DATOS.dat | wc -l )
 echo "$resultados"

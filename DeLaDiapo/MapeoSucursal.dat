@@ -1,0 +1,4 @@
+id1;SUCURSAL;valor_origen;valor_destino;comentario;ACTIVA
+id2;NOVEDAD;valor_origen;valor_destino;comentario;INACTIVA
+id3;NOVEDAD;valor_origen;valor_destino;comentario;ACTIVA
+id4;SUCURSAL;valor_origen;valor_destino;comentario;INACTIVA
